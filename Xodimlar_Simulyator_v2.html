@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Xodimlar bilan ishlash | FAXR MADAD KONSALT</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+:root {
+  --gold:#D4AF37; --gold-light:#F5D76E;
+  --dark:#0A0E1A; --dark2:#111827; --dark3:#1C2535;
+  --blue:#1E3A5F; --blue2:#2563EB;
+  --accent:#E74C3C; --green:#27AE60;
+  --text:#E8EAF0; --text2:#9CA3AF; --card-bg:#162032;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Exo 2',sans-serif;background:var(--dark);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+#salute-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;display:none;}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,var(--dark2),var(--blue));border-bottom:2px solid var(--gold);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(212,175,55,0.2);}
+.logo{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--gold);letter-spacing:1px;}
+.logo span{color:var(--text);font-weight:400;}
+.header-title{font-size:0.95rem;color:var(--text2);text-align:right;}
+
+/* MENU */
+#main-menu{min-height:calc(100vh - 60px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;}
+.menu-title{text-align:center;margin-bottom:40px;}
+.menu-title h1{font-family:'Rajdhani',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);color:var(--gold);text-transform:uppercase;letter-spacing:2px;line-height:1.2;}
+.menu-title p{color:var(--text2);margin-top:8px;font-size:1rem;}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1000px;width:100%;}
+.menu-card{background:var(--card-bg);border:1px solid rgba(212,175,55,0.2);border-radius:16px;padding:28px 24px;cursor:pointer;transition:all 0.3s ease;position:relative;overflow:hidden;}
+.menu-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--gold);transform:scaleY(0);transition:transform 0.3s;}
+.menu-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 12px 30px rgba(212,175,55,0.15);}
+.menu-card:hover::before{transform:scaleY(1);}
+.menu-card-icon{font-size:2.5rem;margin-bottom:14px;}
+.menu-card-num{font-size:0.75rem;color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin-bottom:6px;}
+.menu-card h3{font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--text);}
+.menu-card p{font-size:0.85rem;color:var(--text2);line-height:1.5;}
+.menu-card .badge{position:absolute;top:16px;right:16px;background:var(--gold);color:var(--dark);font-size:0.7rem;font-weight:700;padding:3px 8px;border-radius:20px;}
+
+/* SECTIONS */
+.section{display:none;min-height:calc(100vh - 60px);padding:30px 20px 60px;max-width:1100px;margin:0 auto;}
+.section.active{display:block;}
+.section-header{display:flex;align-items:center;gap:16px;margin-bottom:30px;padding-bottom:16px;border-bottom:1px solid rgba(212,175,55,0.2);}
+.back-btn{background:rgba(212,175,55,0.1);border:1px solid var(--gold);color:var(--gold);padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:0.85rem;transition:all 0.2s;}
+.back-btn:hover{background:var(--gold);color:var(--dark);}
+.section-title{font-family:'Rajdhani',sans-serif;font-size:1.6rem;color:var(--gold);font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+
+/* INFOGRAPHIC */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;}
+.info-block{background:var(--card-bg);border-radius:14px;padding:24px;border:1px solid rgba(212,175,55,0.15);position:relative;overflow:hidden;}
+.info-block::after{content:attr(data-icon);position:absolute;bottom:-10px;right:10px;font-size:4rem;opacity:0.06;}
+.info-block h3{font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.info-block h3 span{font-size:1.2rem;}
+.info-block ul{list-style:none;}
+.info-block ul li{padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.88rem;color:var(--text2);display:flex;gap:8px;align-items:flex-start;line-height:1.4;}
+.info-block ul li::before{content:'›';color:var(--gold);font-weight:700;flex-shrink:0;}
+.info-block ul li:last-child{border-bottom:none;}
+.account-table{width:100%;border-collapse:collapse;margin-top:8px;}
+.account-table th{background:rgba(212,175,55,0.1);color:var(--gold);font-size:0.8rem;padding:8px 10px;text-align:left;border:1px solid rgba(212,175,55,0.2);}
+.account-table td{padding:8px 10px;font-size:0.82rem;color:var(--text2);border:1px solid rgba(255,255,255,0.06);vertical-align:top;}
+.account-table tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+.debet{color:#60A5FA;font-weight:600;}
+.kredit{color:#34D399;font-weight:600;}
+.stat-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+.stat-box{background:rgba(30,58,95,0.5);border:1px solid rgba(37,99,235,0.3);border-radius:10px;padding:12px 16px;text-align:center;flex:1;min-width:100px;}
+.stat-box .num{font-family:'Rajdhani',sans-serif;font-size:1.8rem;font-weight:700;color:var(--gold);line-height:1;}
+.stat-box .lbl{font-size:0.72rem;color:var(--text2);margin-top:4px;}
+
+/* FLASHCARDS */
+.flashcard-container{display:flex;flex-direction:column;align-items:center;gap:24px;}
+.fc-nav{display:flex;gap:12px;align-items:center;}
+.fc-counter{font-family:'Rajdhani',sans-serif;font-size:1.1rem;color:var(--gold);min-width:60px;text-align:center;}
+.fc-btn{background:var(--blue);border:1px solid var(--gold);color:var(--gold);padding:10px 20px;border-radius:8px;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:0.9rem;transition:all 0.2s;}
+.fc-btn:hover{background:var(--gold);color:var(--dark);}
+.fc-btn:disabled{opacity:0.3;cursor:not-allowed;}
+.flashcard-scene{width:100%;max-width:600px;height:320px;perspective:1200px;cursor:pointer;}
+.flashcard{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);}
+.flashcard.flipped{transform:rotateY(180deg);}
+.flashcard-face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:20px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:30px;text-align:center;}
+.flashcard-front{background:linear-gradient(135deg,var(--blue),var(--dark3));border:2px solid var(--gold);}
+.flashcard-back{background:linear-gradient(135deg,#1A3A2A,var(--dark3));border:2px solid #27AE60;transform:rotateY(180deg);}
+.fc-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:3px;color:var(--text2);margin-bottom:12px;}
+.fc-term{font-family:'Rajdhani',sans-serif;font-size:clamp(1.4rem,4vw,2rem);font-weight:700;color:var(--gold);margin-bottom:8px;}
+.fc-hint{font-size:0.8rem;color:var(--text2);}
+.fc-def{font-size:clamp(0.85rem,2vw,1rem);color:var(--text);line-height:1.6;}
+.fc-progress{width:100%;max-width:600px;background:rgba(255,255,255,0.1);border-radius:4px;height:4px;}
+.fc-progress-bar{height:100%;background:var(--gold);border-radius:4px;transition:width 0.3s;}
+
+/* ===== OMAD G'ILDIRAGI ===== */
+.wheel-wrap{display:flex;flex-direction:column;align-items:center;gap:20px;}
+.wheel-container{position:relative;width:320px;height:320px;flex-shrink:0;}
+.wheel-pointer{position:absolute;top:-18px;left:50%;transform:translateX(-50%);z-index:10;font-size:2.2rem;filter:drop-shadow(0 2px 8px rgba(212,175,55,0.8));animation:pointerBounce 1.5s ease-in-out infinite;}
+@keyframes pointerBounce{0%,100%{top:-18px}50%{top:-12px}}
+#wheelCanvas{border-radius:50%;box-shadow:0 0 40px rgba(212,175,55,0.35),0 0 80px rgba(212,175,55,0.1);cursor:pointer;}
+.wheel-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#8B6914);border:3px solid var(--dark);display:flex;align-items:center;justify-content:center;font-size:1.2rem;z-index:5;box-shadow:0 0 16px rgba(212,175,55,0.6);}
+
+.spin-btn{background:linear-gradient(135deg,var(--gold),#B8860B);border:none;color:var(--dark);padding:14px 40px;border-radius:50px;font-family:'Exo 2',sans-serif;font-size:1.1rem;font-weight:900;cursor:pointer;transition:all 0.2s;letter-spacing:1px;text-transform:uppercase;box-shadow:0 6px 20px rgba(212,175,55,0.4);}
+.spin-btn:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 10px 28px rgba(212,175,55,0.55);}
+.spin-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+.wheel-hud{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:640px;background:var(--card-bg);border-radius:12px;padding:12px 20px;border:1px solid rgba(212,175,55,0.15);}
+.hud-score{font-family:'Rajdhani',sans-serif;font-size:1.1rem;}
+.hud-score .s-val{color:var(--gold);font-size:1.5rem;font-weight:700;}
+.hud-q-label{font-size:0.9rem;color:var(--text2);}
+
+.w-timer-ring{position:relative;width:70px;height:70px;}
+.w-timer-ring svg{transform:rotate(-90deg);}
+.w-timer-ring circle{fill:none;stroke-width:5;stroke-dasharray:188;transition:stroke-dashoffset 1s linear,stroke 0.3s;}
+.w-timer-ring .bg{stroke:rgba(255,255,255,0.1);}
+.w-timer-ring .fg{stroke:var(--gold);stroke-dashoffset:0;}
+.w-timer-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;color:var(--gold);}
+
+.w-question-card{width:100%;max-width:640px;background:var(--card-bg);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:24px;display:none;}
+.w-question-card.show{display:block;}
+.w-q-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:8px;}
+.w-q-text{font-size:clamp(1rem,2.5vw,1.15rem);font-weight:700;line-height:1.5;color:var(--text);margin-bottom:18px;}
+.w-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.w-opt{background:rgba(22,32,50,0.85);border:2px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 12px;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:0.88rem;color:var(--text);transition:all 0.2s;display:flex;align-items:center;gap:8px;line-height:1.4;}
+.w-opt .ol{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;background:rgba(212,175,55,0.12);color:var(--gold);font-weight:700;font-size:0.82rem;flex-shrink:0;}
+.w-opt:hover:not(:disabled){border-color:var(--gold);background:rgba(212,175,55,0.08);transform:translateY(-2px);}
+.w-opt.correct{border-color:var(--green)!important;background:rgba(39,174,96,0.15)!important;color:#4ADE80!important;}
+.w-opt.wrong{border-color:var(--accent)!important;background:rgba(231,76,60,0.15)!important;color:#F87171!important;}
+.w-opt:disabled{cursor:not-allowed;}
+.w-feedback{text-align:center;padding:12px;border-radius:10px;margin-top:10px;font-size:0.95rem;font-weight:600;display:none;}
+.w-feedback.show{display:block;}
+.w-feedback.ok{background:rgba(39,174,96,0.15);color:#4ADE80;border:1px solid rgba(39,174,96,0.3);}
+.w-feedback.fail{background:rgba(231,76,60,0.15);color:#F87171;border:1px solid rgba(231,76,60,0.3);}
+
+.w-spin-prompt{width:100%;max-width:640px;background:rgba(212,175,55,0.06);border:1px dashed rgba(212,175,55,0.3);border-radius:16px;padding:28px;text-align:center;color:var(--text2);font-size:0.95rem;}
+.w-spin-prompt strong{color:var(--gold);display:block;font-family:'Rajdhani',sans-serif;font-size:1.4rem;margin-bottom:6px;}
+
+.w-result{display:none;text-align:center;padding:40px 20px;}
+.w-result.show{display:block;}
+.w-res-score{font-family:'Rajdhani',sans-serif;font-size:5rem;font-weight:900;color:var(--gold);line-height:1;}
+.w-res-label{color:var(--text2);font-size:1rem;margin-top:4px;}
+.w-res-stars{font-size:2rem;margin:16px 0;color:var(--gold);}
+.w-res-msg{color:var(--text);font-size:1rem;margin-bottom:24px;}
+.start-btn{background:linear-gradient(135deg,var(--gold),#B8860B);border:none;color:var(--dark);padding:14px 36px;border-radius:12px;font-family:'Exo 2',sans-serif;font-size:1.1rem;font-weight:700;cursor:pointer;transition:all 0.2s;letter-spacing:1px;}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(212,175,55,0.4);}
+
+/* TESTS */
+.test-intro{display:flex;flex-direction:column;align-items:center;min-height:50vh;justify-content:center;text-align:center;gap:16px;}
+.test-intro h2{font-family:'Rajdhani',sans-serif;font-size:1.8rem;color:var(--gold);}
+.test-intro p{color:var(--text2);max-width:500px;line-height:1.6;}
+.test-area{display:none;}
+.test-area.active{display:block;}
+.test-progress-bar{background:rgba(255,255,255,0.08);border-radius:4px;height:6px;margin-bottom:24px;}
+.test-progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--gold-light));transition:width 0.4s ease;}
+.test-question-card{background:var(--card-bg);border:1px solid rgba(212,175,55,0.15);border-radius:16px;padding:28px;margin-bottom:20px;}
+.test-q-meta{font-size:0.75rem;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin-bottom:10px;}
+.test-q-text{font-size:clamp(0.95rem,2.5vw,1.1rem);font-weight:600;line-height:1.5;color:var(--text);}
+.test-options{display:flex;flex-direction:column;gap:10px;}
+.test-opt{background:rgba(22,32,50,0.8);border:2px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px 18px;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:0.88rem;color:var(--text);transition:all 0.2s;text-align:left;display:flex;gap:10px;align-items:center;line-height:1.4;}
+.test-opt .opt-ltr{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;background:rgba(212,175,55,0.12);color:var(--gold);font-weight:700;font-size:0.85rem;flex-shrink:0;}
+.test-opt:hover:not(:disabled){border-color:var(--gold);background:rgba(212,175,55,0.07);}
+.test-opt.correct{border-color:var(--green)!important;background:rgba(39,174,96,0.12)!important;color:#4ADE80!important;}
+.test-opt.wrong{border-color:var(--accent)!important;background:rgba(231,76,60,0.12)!important;color:#F87171!important;}
+.test-opt:disabled{cursor:not-allowed;}
+.test-nav{display:flex;justify-content:flex-end;gap:12px;margin-top:16px;}
+.next-btn{background:linear-gradient(135deg,var(--gold),#B8860B);border:none;color:var(--dark);padding:12px 28px;border-radius:10px;font-family:'Exo 2',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:none;}
+.next-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(212,175,55,0.4);}
+.next-btn.visible{display:inline-block;}
+.test-result-area{display:none;}
+.test-result-area.show{display:block;}
+.result-banner{background:linear-gradient(135deg,var(--card-bg),var(--dark3));border:1px solid rgba(212,175,55,0.3);border-radius:16px;padding:30px;text-align:center;margin-bottom:24px;}
+.result-big{font-family:'Rajdhani',sans-serif;font-size:4rem;font-weight:900;color:var(--gold);}
+.result-sub{color:var(--text2);font-size:1rem;margin-top:4px;}
+.result-emoji{font-size:2.5rem;margin:12px 0;}
+.result-comment{color:var(--text);font-size:1rem;}
+.review-list{display:flex;flex-direction:column;gap:12px;}
+.review-item{background:var(--card-bg);border-radius:12px;padding:18px;border-left:4px solid;}
+.review-item.ok{border-color:var(--green);}
+.review-item.fail{border-color:var(--accent);}
+.review-item .ri-q{font-size:0.88rem;font-weight:600;margin-bottom:8px;color:var(--text);}
+.review-item .ri-wrong{font-size:0.82rem;color:#F87171;}
+.review-item .ri-correct{font-size:0.82rem;color:#4ADE80;}
+.ri-badge{display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-bottom:8px;}
+.ri-badge.ok{background:rgba(39,174,96,0.2);color:#4ADE80;}
+.ri-badge.fail{background:rgba(231,76,60,0.2);color:#F87171;}
+.retry-btn{background:rgba(212,175,55,0.1);border:1px solid var(--gold);color:var(--gold);padding:12px 28px;border-radius:10px;font-family:'Exo 2',sans-serif;font-size:0.95rem;font-weight:600;cursor:pointer;transition:all 0.2s;margin-top:20px;display:block;width:100%;text-align:center;}
+.retry-btn:hover{background:var(--gold);color:var(--dark);}
+
+.footer-brand{text-align:center;padding:30px;color:var(--text2);font-size:0.8rem;border-top:1px solid rgba(212,175,55,0.1);margin-top:40px;}
+.footer-brand strong{color:var(--gold);}
+.music-toggle{background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.3);color:var(--gold);padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Exo 2',sans-serif;font-size:0.8rem;transition:all 0.2s;position:fixed;bottom:20px;right:20px;z-index:50;}
+.music-toggle:hover{background:rgba(212,175,55,0.2);}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.fade-in{animation:fadeIn 0.4s ease forwards;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.shake{animation:shake 0.4s ease;}
+@keyframes wheelGlow{0%,100%{box-shadow:0 0 40px rgba(212,175,55,0.35)}50%{box-shadow:0 0 70px rgba(212,175,55,0.7)}}
+
+@media(max-width:600px){.w-options{grid-template-columns:1fr;}.menu-grid{grid-template-columns:1fr;}.info-grid{grid-template-columns:1fr;}.wheel-container{width:260px;height:260px;}}
+</style>
+</head>
+<body>
+<canvas id="salute-canvas"></canvas>
+<header class="header">
+  <div class="logo">FAXR MADAD <span>KONSALT</span></div>
+  <div class="header-title">Buxgalteriya Maktabi<br>Simulyatori</div>
+</header>
+
+<!-- MAIN MENU -->
+<div id="main-menu">
+  <div class="menu-title">
+    <h1>Xodimlar bilan ishlash</h1>
+    <p>Interaktiv o'quv simulyatori — bilimingizni sinab ko'ring!</p>
+  </div>
+  <div class="menu-grid">
+    <div class="menu-card" onclick="showSection('infographic')">
+      <div class="menu-card-icon">📊</div>
+      <div class="menu-card-num">Bo'lim 1</div>
+      <h3>Infografika</h3>
+      <p>Mavzuning asosiy qoidalari va schyotlar operatsiyalari vizual ko'rinishda</p>
+    </div>
+    <div class="menu-card" onclick="showSection('flashcards')">
+      <div class="menu-card-icon">🃏</div>
+      <div class="menu-card-num">Bo'lim 2</div>
+      <h3>Fleshkartalar</h3>
+      <p>Asosiy atamalar va tushunchalar — kartani ag'daring, ma'noni o'rganing</p>
+      <div class="badge">15 karta</div>
+    </div>
+    <div class="menu-card" onclick="showSection('wheel-game')">
+      <div class="menu-card-icon">🎡</div>
+      <div class="menu-card-num">Bo'lim 3</div>
+      <h3>Omad G'ildiragi</h3>
+      <p>G'ildirakni aylantiring, savolga javob bering va ball to'plang!</p>
+      <div class="badge">20 savol</div>
+    </div>
+    <div class="menu-card" onclick="showSection('test1')">
+      <div class="menu-card-icon">📝</div>
+      <div class="menu-card-num">Test 1</div>
+      <h3>Nazariy bilim testi</h3>
+      <p>Mehnat qonunchiligi asoslaridan 10 ta savol</p>
+      <div class="badge">10 savol</div>
+    </div>
+    <div class="menu-card" onclick="showSection('test2')">
+      <div class="menu-card-icon">🔍</div>
+      <div class="menu-card-num">Test 2</div>
+      <h3>Nima noto'g'ri?</h3>
+      <p>Xato fikrni toping! Tanqidiy fikrlash testi</p>
+      <div class="badge">10 savol</div>
+    </div>
+    <div class="menu-card" onclick="showSection('test3')">
+      <div class="menu-card-icon">🏦</div>
+      <div class="menu-card-num">Test 3</div>
+      <h3>Buxgalteriya o'tkazmalari</h3>
+      <p>6520, 6710, 9430 schyotlari bo'yicha o'tkazma testi</p>
+      <div class="badge">10 savol</div>
+    </div>
+  </div>
+  <div class="footer-brand" style="margin-top:40px">© 2024 <strong>FAXR MADAD KONSALT</strong> Buxgalteriya Maktabi</div>
+</div>
+
+<!-- INFOGRAPHIC -->
+<div id="infographic" class="section">
+  <div class="section-header">
+    <button class="back-btn" onclick="showMenu()">← Orqaga</button>
+    <div class="section-title">📊 Infografika</div>
+  </div>
+  <div class="info-grid">
+    <div class="info-block" data-icon="👶">
+      <h3><span>👶</span> Ishga qabul — Yosh chegaralari</h3>
+      <div class="stat-row">
+        <div class="stat-box"><div class="num">16</div><div class="lbl">Umumiy yosh</div></div>
+        <div class="stat-box"><div class="num">15</div><div class="lbl">O'quvchilar</div></div>
+        <div class="stat-box"><div class="num">15↓</div><div class="lbl">San'at/sport</div></div>
+      </div>
+      <ul style="margin-top:12px">
+        <li>16 yosh — mustaqil ravishda mehnat shartnomasi tuzish</li>
+        <li>15 yosh — ota-ona roziligi va yengil ish sharti bilan</li>
+        <li>15 yoshgacha — vasiylik organi ruxsati va ota-ona roziligi</li>
+        <li>18 yoshgacha — voyaga yetmagan uchun qo'shimcha himoya</li>
+        <li>Zararli, tungi va og'ir ishlarda voyaga yetmaganlar TAQIQ</li>
+      </ul>
+    </div>
+    <div class="info-block" data-icon="📋">
+      <h3><span>📋</span> Mehnat shartnomasi — Majburiy shartlar</h3>
+      <ul>
+        <li>Ish joyi — tashkilot nomi va manzili ko'rsatilishi shart</li>
+        <li>Mehnat vazifasi — lavozim yoki kasb aniq ko'rsatiladi</li>
+        <li>Ishning boshlanish sanasi — muayyan sana belgilanadi</li>
+        <li>Mehnatga haq to'lash — maosh, ustama, mukofotlar</li>
+        <li>Mehnat shartnomasi muddati — muddatli bo'lsa asoslar</li>
+        <li>Ish vaqti va dam olish rejimi — agar umumiydan farq qilsa</li>
+        <li>Kafolatlar — noqulay sharoitlardagi ish uchun</li>
+      </ul>
+    </div>
+    <div class="info-block" data-icon="💰">
+      <h3><span>💰</span> Ish haqi — Asosiy qoidalar</h3>
+      <ul>
+        <li>Har yarim oyda kamida bir marta to'lanishi MAJBURIY</li>
+        <li>Ish haqi = asosiy maosh + kompensatsiya + mukofot</li>
+        <li>Kechiktirilganda: MB qayta moliyalashtirish stavkasining 10%</li>
+        <li>Kechiktirish — xodimning aybidan qat'i nazar javobgarlik</li>
+        <li>Ta'til to'lovi — ta'til boshlanishidan oldin oxirgi ish kuni</li>
+        <li>Ishdan bo'shatishda — o'sha kuni hisob-kitob qilish MAJBURIY</li>
+      </ul>
+    </div>
+    <div class="info-block" data-icon="⚖️">
+      <h3><span>⚖️</span> Moddiy javobgarlik — 4 ta shart</h3>
+      <ul>
+        <li>1-shart: Ish beruvchida haqiqiy mulkiy zarar mavjudligi</li>
+        <li>2-shart: Xodim tomonidan g'ayriqonuniy qilmish sodir etilganligi</li>
+        <li>3-shart: Sabab-oqibat munosabatining mavjudligi</li>
+        <li>4-shart: Zarar yetkazilishida xodimning aybi borligini isbotlash</li>
+        <li>Olinmagan daromad (boy berilgan foyda) UNDIRILMAYDI</li>
+        <li>Bartaraf etib bo'lmas kuch (force majeure) — ozod etiladi</li>
+      </ul>
+    </div>
+    <div class="info-block" data-icon="⏰">
+      <h3><span>⏰</span> Ish vaqti — Voyaga yetmaganlar</h3>
+      <ul>
+        <li>15-16 yosh (6 kunlik): kuniga 4 soat, (5 kunlik): 5 soat</li>
+        <li>16-18 yosh (6 kunlik): kuniga 6 soat, (5 kunlik): 7.5 soat</li>
+        <li>O'qish bilan birgalikda 15-16 yosh: kuniga 2 soat</li>
+        <li>O'qish bilan birgalikda 16-18 yosh: kuniga 3 soat</li>
+        <li>18 yoshgacha yillik ta'til — kamida 30 kalendar kun</li>
+        <li>Ta'tilni xodim o'zi uchun qulay vaqtda ishlatish huquqi</li>
+      </ul>
+    </div>
+    <div class="info-block" data-icon="🏦">
+      <h3><span>🏦</span> 6520-schyot: INPS bo'yicha qarzlar</h3>
+      <table class="account-table">
+        <tr><th>Operatsiya</th><th class="debet">Debet</th><th class="kredit">Kredit</th></tr>
+        <tr><td>Ish beruvchi INPS ulushi hisoblandi</td><td class="debet">9430</td><td class="kredit">6520</td></tr>
+        <tr><td>Xodim INPS ulushi (1%) ushlab qolindi</td><td class="debet">6710</td><td class="kredit">6520</td></tr>
+        <tr><td>Kasallik varag'i nafaqasi hisoblandi</td><td class="debet">6520</td><td class="kredit">6710</td></tr>
+        <tr><td>INPS fondiga to'lov o'tkazildi</td><td class="debet">6520</td><td class="kredit">5110</td></tr>
+      </table>
+    </div>
+    <div class="info-block" data-icon="📊">
+      <h3><span>📊</span> Asosiy Schyotlar Tizimi</h3>
+      <table class="account-table">
+        <tr><th>Schyot</th><th>Nomi</th><th>Turi</th></tr>
+        <tr><td><strong>9430</strong></td><td>Mehnat haqi xarajatlari</td><td style="color:#F59E0B">Aktiv</td></tr>
+        <tr><td><strong>6710</strong></td><td>Mehnat haqi bo'yicha qarz</td><td style="color:#34D399">Passiv</td></tr>
+        <tr><td><strong>6520</strong></td><td>INPS bo'yicha qarz</td><td style="color:#34D399">Passiv</td></tr>
+        <tr><td><strong>6410</strong></td><td>JSHIS bo'yicha qarz</td><td style="color:#34D399">Passiv</td></tr>
+        <tr><td><strong>5110</strong></td><td>Hisob-kitob schyoti (bank)</td><td style="color:#F59E0B">Aktiv</td></tr>
+        <tr><td><strong>5010</strong></td><td>Kassa (naqd pul)</td><td style="color:#F59E0B">Aktiv</td></tr>
+      </table>
+    </div>
+    <div class="info-block" data-icon="🔄">
+      <h3><span>🔄</span> Tipik O'tkazmalar Zanjiri</h3>
+      <ul>
+        <li>Ish haqi hisoblandi: <strong class="debet">Dt 9430</strong> / <strong class="kredit">Kt 6710</strong></li>
+        <li>JSHIS ushlab qolindi: <strong class="debet">Dt 6710</strong> / <strong class="kredit">Kt 6410</strong></li>
+        <li>Xodim INPS (1%) ushlab qolindi: <strong class="debet">Dt 6710</strong> / <strong class="kredit">Kt 6520</strong></li>
+        <li>Ish beruvchi INPS hisoblandi: <strong class="debet">Dt 9430</strong> / <strong class="kredit">Kt 6520</strong></li>
+        <li>Ish haqi bank orqali to'landi: <strong class="debet">Dt 6710</strong> / <strong class="kredit">Kt 5110</strong></li>
+        <li>INPS fondiga to'landi: <strong class="debet">Dt 6520</strong> / <strong class="kredit">Kt 5110</strong></li>
+        <li>JSHIS byudjetga to'landi: <strong class="debet">Dt 6410</strong> / <strong class="kredit">Kt 5110</strong></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-brand">© 2024 <strong>FAXR MADAD KONSALT</strong> Buxgalteriya Maktabi</div>
+</div>
+
+<!-- FLASHCARDS -->
+<div id="flashcards" class="section">
+  <div class="section-header">
+    <button class="back-btn" onclick="showMenu()">← Orqaga</button>
+    <div class="section-title">🃏 Fleshkartalar</div>
+  </div>
+  <div class="flashcard-container">
+    <div class="flashcard-scene" onclick="flipCard()">
+      <div class="flashcard" id="fc">
+        <div class="flashcard-face flashcard-front">
+          <div class="fc-label">Atama</div>
+          <div class="fc-term" id="fc-term">—</div>
+          <div class="fc-hint">Kartani bosing → ta'rifni ko'ring</div>
+        </div>
+        <div class="flashcard-face flashcard-back">
+          <div class="fc-label">Ta'rif</div>
+          <div class="fc-def" id="fc-def">—</div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-progress"><div class="fc-progress-bar" id="fc-bar"></div></div>
+    <div class="fc-nav">
+      <button class="fc-btn" id="fc-prev" onclick="fcNav(-1)">‹ Oldingi</button>
+      <div class="fc-counter" id="fc-count">1 / 15</div>
+      <button class="fc-btn" id="fc-next" onclick="fcNav(1)">Keyingi ›</button>
+    </div>
+  </div>
+  <div class="footer-brand">© 2024 <strong>FAXR MADAD KONSALT</strong> Buxgalteriya Maktabi</div>
+</div>
+
+<!-- OMAD G'ILDIRAGI -->
+<div id="wheel-game" class="section">
+  <div class="section-header">
+    <button class="back-btn" onclick="showMenu()">← Orqaga</button>
+    <div class="section-title">🎡 Omad G'ildiragi</div>
+  </div>
+
+  <div id="wg-intro" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;text-align:center;gap:18px;">
+    <div style="font-size:4rem">🎡</div>
+    <h2 style="font-family:'Rajdhani',sans-serif;font-size:2rem;color:var(--gold)">Omad G'ildiragi</h2>
+    <p style="color:var(--text2);max-width:480px;line-height:1.6">G'ildirakni aylantiring — savol ochiladi! Har savolga <strong style="color:var(--gold)">15 soniya</strong> vaqt bor. 20 ta savolga javob bering. To'g'ri javob uchun salyut!</p>
+    <button class="start-btn" onclick="initWheel()">🎯 O'yinni Boshlash</button>
+  </div>
+
+  <div id="wg-play" style="display:none;">
+    <div class="wheel-hud" style="margin:0 auto 16px;max-width:640px;">
+      <div class="hud-score">Ball: <span class="s-val" id="wg-score">0</span></div>
+      <div class="w-timer-ring" id="wg-timer-wrap" style="display:none;">
+        <svg width="70" height="70" viewBox="0 0 70 70">
+          <circle class="bg" cx="35" cy="35" r="30"/>
+          <circle class="fg" cx="35" cy="35" r="30" id="wg-timer-circle"/>
+        </svg>
+        <div class="w-timer-text" id="wg-timer-text">15</div>
+      </div>
+      <div class="hud-q-label" id="wg-q-label">Savol 0 / 20</div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:24px;justify-content:center;align-items:flex-start;max-width:900px;margin:0 auto;">
+      <div class="wheel-wrap">
+        <div class="wheel-container" id="wg-container">
+          <div class="wheel-pointer">▼</div>
+          <canvas id="wheelCanvas" width="320" height="320"></canvas>
+          <div class="wheel-center">🎯</div>
+        </div>
+        <button class="spin-btn" id="wg-spin-btn" onclick="spinWheel()">🎡 Aylantir!</button>
+      </div>
+
+      <div style="flex:1;min-width:280px;max-width:600px;display:flex;flex-direction:column;gap:12px;">
+        <div class="w-spin-prompt" id="wg-prompt">
+          <strong>G'ildirakni aylantiring!</strong>
+          Savol ochiladi va 15 soniyada javob berish kerak
+        </div>
+        <div class="w-question-card" id="wg-qcard">
+          <div class="w-q-label" id="wg-qlabel">📋 Savol</div>
+          <div class="w-q-text" id="wg-qtext">—</div>
+          <div class="w-options" id="wg-opts"></div>
+          <div class="w-feedback" id="wg-fb"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-result" id="wg-result">
+    <div style="font-size:3.5rem" id="wg-res-icon">🏆</div>
+    <div class="w-res-score" id="wg-res-score">0</div>
+    <div class="w-res-label">20 ta savoldan</div>
+    <div class="w-res-stars" id="wg-res-stars">⭐⭐⭐</div>
+    <div class="w-res-msg" id="wg-res-msg"></div>
+    <button class="start-btn" onclick="resetWheel()" style="margin-top:16px">🔄 Qaytadan o'ynash</button>
+    <button class="back-btn" onclick="showMenu()" style="margin-top:12px;display:block;width:100%;padding:12px;text-align:center">← Asosiy Menyu</button>
+  </div>
+
+  <div class="footer-brand">© 2024 <strong>FAXR MADAD KONSALT</strong> Buxgalteriya Maktabi</div>
+</div>
+
+<!-- TEST 1 -->
+<div id="test1" class="section">
+  <div class="section-header">
+    <button class="back-btn" onclick="showMenu()">← Orqaga</button>
+    <div class="section-title">📝 Test 1 — Nazariy Bilim</div>
+  </div>
+  <div class="test-intro" id="t1-intro">
+    <div style="font-size:3rem">📝</div>
+    <h2>Nazariy Bilim Testi</h2>
+    <p>Mehnat qonunchiligi asoslaridan 10 ta savol. Har bir savolga faqat bitta to'g'ri javob bor.</p>
+    <button class="start-btn" onclick="startTest(1)">Testni Boshlash</button>
+  </div>
+  <div class="test-area" id="t1-area">
+    <div class="test-progress-bar"><div class="test-progress-fill" id="t1-prog"></div></div>
+    <div id="t1-question-wrap"></div>
+    <div class="test-nav"><button class="next-btn" id="t1-next" onclick="nextTestQ(1)">Keyingi →</button></div>
+  </div>
+  <div class="test-result-area" id="t1-result"></div>
+  <div class="footer-brand">© 2024 <strong>FAXR MADAD KONSALT</strong> Buxgalteriya Maktabi</div>
+</div>
+
+<!-- TEST 2 -->
+<div id="test2" class="section">
+  <div class="section-header">
+    <button class="back-btn" onclick="showMenu()">← Orqaga</button>
+    <div class="section-title">🔍 Test 2 — Nima Noto'g'ri?</div>
+  </div>
+  <div class="test-intro" id="t2-intro">
+    <div style="font-size:3rem">🔍</div>
+    <h2>Nima Noto'g'ri? Testi</h2>
+    <p>Har bir savolda 4 ta fikrdan biri NOTO'G'RI. Xato fikrni aniqlab, tanlang!</p>
+    <button class="start-btn" onclick="startTest(2)">Testni Boshlash</button>
+  </div>
+  <div class="test-area" id="t2-area">
+    <div class="test-progress-bar"><div class="test-progress-fill" id="t2-prog"></div></div>
+    <div id="t2-question-wrap"></div>
+    <div class="test-nav"><button class="next-btn" id="t2-next" onclick="nextTestQ(2)">Keyingi →</button></div>
+  </div>
+  <div class="test-result-area" id="t2-result"></div>
+  <div class="footer-brand">© 2024 <strong>FAXR MADAD KONSALT</strong> Buxgalteriya Maktabi</div>
+</div>
+
+<!-- TEST 3 -->
+<div id="test3" class="section">
+  <div class="section-header">
+    <button class="back-btn" onclick="showMenu()">← Orqaga</button>
+    <div class="section-title">🏦 Test 3 — Buxgalteriya O'tkazmalari</div>
+  </div>
+  <div class="test-intro" id="t3-intro">
+    <div style="font-size:3rem">🏦</div>
+    <h2>Buxgalteriya O'tkazmalari Testi</h2>
+    <p>6520, 6710, 9430 schyotlari bo'yicha to'g'ri o'tkazmani toping. 10 ta savol.</p>
+    <button class="start-btn" onclick="startTest(3)">Testni Boshlash</button>
+  </div>
+  <div class="test-area" id="t3-area">
+    <div class="test-progress-bar"><div class="test-progress-fill" id="t3-prog"></div></div>
+    <div id="t3-question-wrap"></div>
+    <div class="test-nav"><button class="next-btn" id="t3-next" onclick="nextTestQ(3)">Keyingi →</button></div>
+  </div>
+  <div class="test-result-area" id="t3-result"></div>
+  <div class="footer-brand">© 2024 <strong>FAXR MADAD KONSALT</strong> Buxgalteriya Maktabi</div>
+</div>
+
+<button class="music-toggle" id="music-btn" onclick="toggleMusic()">🎵 Musiqa: Yoq</button>
+
+<script>
+// ============= FLASHCARD DATA =============
+const flashcardsData = [
+  {term:"Ish beruvchi",def:"Mulkchilik shaklidan qat'i nazar tashkilotlar, ularning filiallari, shuningdek jismoniy shaxslar — tadbirkorlar va uy ishchilarini yollagan shaxslar."},
+  {term:"Mehnat layoqati",def:"Fuqaroning o'z harakatlari orqali mehnat huquqlariga ega bo'lish, majburiyatlarini bajarish qobiliyati. 16 yoshdan yuzaga keladi."},
+  {term:"Cheklangan moddiy javobgarlik",def:"Xodim faqat o'rtacha oylik maoshi miqdorida javob beradi. Umumiy qoida sifatida ko'pchilik xodimlarga qo'llaniladi."},
+  {term:"To'liq moddiy javobgarlik",def:"Xodim yetkazilgan zararning to'liq miqdorini qoplashi shart. Maxsus shartnoma asosida yoki qonunda belgilangan hollarda qo'llaniladi."},
+  {term:"Ish haqi",def:"Asosiy maosh + kompensatsiya to'lovlari (ustamalar) + rag'batlantiruvchi to'lovlar (mukofotlar). Har yarim oyda kamida bir marta to'lanishi shart."},
+  {term:"6520-schyot",def:"INPS (ijtimoiy sug'urta va ta'minot) bo'yicha qarzlar hisobi. Passiv schyot: Kt — qarz paydo bo'lganda, Dt — to'lov amalga oshirilganda."},
+  {term:"6710-schyot",def:"Xodimlarga mehnat haqi to'lash bo'yicha qarzlar hisobi. Passiv schyot: Kt — ish haqi hisoblanganda, Dt — ish haqi to'langanda."},
+  {term:"INPS (Ijtimoiy Sug'urta)",def:"Pensiya va ijtimoiy sug'urta jamg'armasiga ajratmalar. Ish beruvchi va xodim ulushlaridan iborat. 6520-schyotda hisoblanadi."},
+  {term:"JSHIS",def:"Jismoniy shaxslardan olinadigan daromad solig'i. Xodimning ish haqidan ushlab qolinadigan soliq. Dt 6710 / Kt 6410 o'tkazmasi bilan hisoblanadi."},
+  {term:"Ta'til to'lovi",def:"Mehnat ta'tili davrida o'rtacha ish haqining saqlanishi. Ta'til boshlanishidan oldin oxirgi ish kunigacha to'lanishi shart."},
+  {term:"Voyaga yetmagan xodim",def:"18 yoshga to'lmagan xodim. Qo'shimcha himoyadan foydalanadi: qisqartirilgan ish vaqti, 30 kunlik ta'til, og'ir va zararli ishlarda taqiq."},
+  {term:"Neustoyka",def:"Mehnat shartnomasini belgilangan muddatdan oldin bekor qilganda to'lanadigan jazo to'lovi. Miqdori shartnomada belgilanadi."},
+  {term:"Regress (Teskari talab)",def:"Ish beruvchining bank yoki uchinchi shaxs aybidan yuzaga kelgan zararga nisbatan qaytarib olish huquqi."},
+  {term:"9430-schyot",def:"Mehnat haqi xarajatlari. Aktiv schyot: Dt — ish haqi va INPS xarajatlari hisoblaganda. Moliyaviy natijalar hisobiga o'tkaziladi."},
+  {term:"Sinov muddati",def:"Ishga qabul qilishda belgilanishi mumkin bo'lgan qo'shimcha shart. Voyaga yetmaganlar, homilador va boshqalarga sinov muddati BELGILANMAYDI."}
+];
+
+// ============= WHEEL GAME DATA =============
+const wheelQuestions = [
+  {q:"Mehnat kodeksi nechi yoshdan ishga olishni belgilaydi?",opts:["16 yoshdan olish mumkin","14 yoshdan olish mumkin","18 yoshdan olish mumkin","15 yoshdan olish mumkin"],a:0},
+  {q:"Ish haqi qancha muddatda bir marta to'lanishi shart?",opts:["Har yarim oyda bir","Har haftada bir marta","Har oyda bir marta","Har chorakda bir marta"],a:0},
+  {q:"Voyaga yetmagan xodim yillik ta'tili necha kun?",opts:["Kamida yigirma bir kun","Kamida o'ttiz kalendar kun","Kamida o'n besh ish kun","Kamida yigirma besh kun"],a:1},
+  {q:"Kechiktirilgan ish haqi uchun kompensatsiya foizi qancha?",opts:["MB stavkasining besh foizi","MB stavkasining yigirma foizi","MB stavkasining o'n besh foizi","MB stavkasining o'n foizi"],a:3},
+  {q:"Mehnat shartnomasiga qaysi shart kiritilishi majburiy?",opts:["Xodimning oilaviy ahvoli","Xodimning ta'lim darajasi","Xodimning olgan mukofoti","Ish joyi ko'rsatilishi shart"],a:3},
+  {q:"15 yoshli o'quvchini ishga olish uchun nima talab etiladi?",opts:["Faqat ariza yetarli bo'ladi","Faqat mehnat inspeksiyasi roziligi","Faqat ota-ona roziligi","Vasiylik organi ruxsati kerak"],a:3},
+  {q:"Moddiy javobgarlik uchun nechta shart bo'lishi lozim?",opts:["Bittasi ham yetarlidir","Ikki shartning mavjudligi","Uch shartning mavjudligi","To'rttala shart birga"],a:3},
+  {q:"Xodim qaysi holatda javobgarlikdan ozod etiladi?",opts:["Xodim kasal bo'lganda","Xodim yangi kelganda","Kuch majburiy holat bo'lganda","Rahbar ruxsat berganda"],a:2},
+  {q:"To'liq moddiy javobgarlik qachon yuzaga keladi?",opts:["Xodim yangi kelganda","Xodim katta yoshda","Maxsus shartnoma tuzilganda","Ish beruvchi xohlasagina"],a:2},
+  {q:"Xodim ishdan bo'shaganda to'lovlar qachon amalga oshiriladi?",opts:["Uch kundan keyin to'lanadi","Bir haftadan keyin to'lanadi","Bir oydan keyin to'lanadi","O'sha kuni amalga oshiriladi"],a:3},
+  {q:"16-18 yoshli xodim 5 kunlik haftada kuniga necha soat ishlaydi?",opts:["Kuniga besh soat ishlaydi","Kuniga olti soat ishlaydi","Kuniga sakkiz soat ishlaydi","Kuniga yetti yarim soat"],a:3},
+  {q:"Qaysi xodimga sinov muddati belgilanmaydi?",opts:["Yangi mutaxassislarga doim","Katta yoshli xodimga","Homilador xotinlarga mutlaqo","Tajribali rahbarlarga faqat"],a:2},
+  {q:"Ish haqini oyiga bir marta to'lash qanday baholanadi?",opts:["Ish beruvchi xohishiga bog'liq","Jamoa shartnomasi belgilaydi","Mehnat inspeksiyasi ruxsati","Qonunga zid hisoblanadi"],a:3},
+  {q:"Boy berilgan foyda (olinmagan daromad) xodimdan...",opts:["To'liq undirib olinadi","Qisman undirib olinadi","Qonun asosida undiriladi","Umuman undirilmaydi"],a:3},
+  {q:"Mehnat shartnomasi ba'zi shartlar bo'lmasa nima qilinadi?",opts:["Shartnoma bekor qilinadi","Shartnoma haqiqiy emas","Mehnat inspeksiyasi belgilaydi","Qo'shimcha kelishuv rasmiylashtiriladi"],a:3},
+  {q:"15-16 yoshli xodim 6 kunlik haftada kuniga necha soat ishlaydi?",opts:["Kuniga ikki soat ishlaydi","Kuniga besh soat ishlaydi","Kuniga to'rt soat ishlaydi","Kuniga uch soat ishlaydi"],a:2},
+  {q:"Ish beruvchi kechiktirganligi uchun javobgarlik qachon yuzaga keladi?",opts:["Faqat aybdor bo'lganda","Faqat bank kechiktirganda","Faqat xodim talab qilganda","Aybidan qat'i nazar doim"],a:3},
+  {q:"Oqlangan xo'jalik tavakkalchiligi holatida xodim...",opts:["To'liq javobgar bo'ladi","Qisman javobgar hisoblanadi","Ish beruvchi javobgar bo'ladi","Javobgarlikdan ozod etiladi"],a:3},
+  {q:"Mehnat shartnomasi sub'yektlari kimlar?",opts:["Faqat O'zbekiston fuqarolari","O'zbekiston va chet el fuqarolari","Faqat voyaga yetganlar","Faqat rasmiy ishchilar"],a:1},
+  {q:"Ish haqiga nimalar kiradi?",opts:["Faqat asosiy maosh kiradi","Faqat nafaqa to'lovlari","Faqat rag'batlantirish to'lovi","Maosh, kompensatsiya, mukofot"],a:3}
+];
+
+// ============= TEST DATA =============
+const test1Questions = [
+  {q:"Umumiy tartibda nechi yoshdan ishga olish mumkin?",opts:["16 yoshdan olish mumkin","14 yoshdan olish mumkin","18 yoshdan olish mumkin","15 yoshdan olish mumkin"],a:0},
+  {q:"Ish haqi qancha muddatda bir marta to'lanishi shart?",opts:["Har oyda bir marta","Har haftada bir marta","Har yarim oyda bir marta","Har chorakda bir marta"],a:2},
+  {q:"Voyaga yetmagan xodimga qancha yillik ta'til beriladi?",opts:["Kamida 21 kalendar kun","Kamida 24 kalendar kun","Kamida 15 ish kuni","Kamida 30 kalendar kun"],a:3},
+  {q:"Ish beruvchi kechiktirganligi uchun qancha foiz to'laydi?",opts:["MB stavkasining 5% si","MB stavkasining 20% si","MB stavkasining 15% si","MB stavkasining 10% si"],a:3},
+  {q:"Mehnat shartnomasidagi qaysi shart majburiy hisoblanadi?",opts:["Xodimning oilaviy ahvoli","Xodimning millati yoziladi","Ish joyi ko'rsatilishi shart","Xodimning qarindoshlari"],a:2},
+  {q:"15 yoshli o'quvchini ishga olish uchun nima zarur?",opts:["Faqat ota-ona roziligi","Yozma ariza yetarlidir","Vasiylik organi ruxsati bilan","Mehnat inspeksiyasi rukhsati"],a:2},
+  {q:"Moddiy javobgarlik uchun qancha asosiy shart bo'lishi shart?",opts:["Bittasi ham yetarli","Ikki shart yetarli","Uch shart bo'lsa kifoya","To'rttala shart birga"],a:3},
+  {q:"Qaysi holatda xodim moddiy javobgarlikdan ozod bo'ladi?",opts:["Xodim kasal bo'lganda","Xodim yangi bo'lganda","Bartaraf etib bo'lmas kuch bo'lganda","Rahbar ruxsat berganda"],a:2},
+  {q:"To'liq moddiy javobgarlik qachon vujudga keladi?",opts:["Xodim yangi kelganda","Maxsus shartnoma tuzilganda","Ish beruvchi xohlasagina","Xodim ogohlantirilganda"],a:1},
+  {q:"Xodim ishdan bo'shaganda hisob-kitob qachon qilinadi?",opts:["Bir haftadan keyin","Uch kundan keyin","Bir oydan keyin","O'sha kuni amalga oshiriladi"],a:3}
+];
+
+const test2Questions = [
+  {q:"Ish haqi haqida qaysi fikr NOTO'G'RI?",opts:["Har yarim oyda to'lanadi","Mukofotlar ish haqiga kiradi","Oyda bir marta to'lanadi","Kompensatsiya ham ish haqi"],a:2},
+  {q:"Moddiy javobgarlik haqida qaysi fikr NOTO'G'RI?",opts:["Zarar mavjudligi shart","Sabab-oqibat bo'lishi kerak","Olinmagan foyda undiriladi","Xodim aybi bo'lishi kerak"],a:2},
+  {q:"Voyaga yetmaganlar haqida qaysi fikr NOTO'G'RI?",opts:["30 kunlik ta'til beriladi","Tungi ishga ruxsat beriladi","Og'ir ishlar taqiqlangan","Yillik tibbiy ko'rik o'tiladi"],a:1},
+  {q:"Mehnat shartnomasi haqida qaysi fikr NOTO'G'RI?",opts:["Ish joyi majburiy shart","Maosh shartlari kiritiladi","Shartnoma og'zaki bo'ladi","Boshlanish sanasi belgilanadi"],a:2},
+  {q:"Ish beruvchi javobgarligi haqida qaysi fikr NOTO'G'RI?",opts:["Kechiktirganlik uchun foiz to'laydi","Bank aybi bo'lsa javobgar emas","Ta'til to'lovi kechiktirilmaydi","MB stavkasi asosida hisobi"],a:1},
+  {q:"15 yoshgacha ishga olish haqida qaysi fikr NOTO'G'RI?",opts:["Ota-ona roziligi zarur","Har qanday ishga olish mumkin","Vasiylik organi ruxsati shart","Sog'ligiga ziyon yetmassin"],a:1},
+  {q:"To'liq moddiy javobgarlik haqida qaysi fikr NOTO'G'RI?",opts:["Maxsus shartnoma tuziladi","Qasddan zarar to'liq undiriladi","Har qanday xodimga qo'llanadi","Pul qimmatliklariga qo'llanadi"],a:2},
+  {q:"Mehnat shartnomasini bekor qilish haqida qaysi fikr NOTO'G'RI?",opts:["So'nggi ish haqi to'lanadi","Ta'til kompensatsiyasi to'lanadi","To'lovlar bir oydan so'ng","Nafaqa ham to'lanishi mumkin"],a:2},
+  {q:"16-18 yosh xodimlari haqida qaysi fikr NOTO'G'RI?",opts:["6 kunlikda 6 soat ishlaydi","5 kunlikda 7.5 soat ishlaydi","Tungi ish taqiqlanmagan ularga","Qisqartirilgan vaqt beriladi"],a:2},
+  {q:"Sinov muddati haqida qaysi fikr NOTO'G'RI?",opts:["Qo'shimcha shart sifatida kiritiladi","Homiladorlarga sinov belgilanadi","Voyaga yetmaganlarga belgilanmaydi","Shartnomada ko'rsatilishi shart"],a:1}
+];
+
+const test3Questions = [
+  {q:"Xodimga ish haqi hisoblandi. To'g'ri o'tkazma qaysi?",opts:["Dt 9430, Kt 6710","Dt 6710, Kt 9430","Dt 6520, Kt 6710","Dt 9430, Kt 6520"],a:0},
+  {q:"Ish beruvchi INPS ulushi hisoblandi. To'g'ri o'tkazma?",opts:["Dt 6520, Kt 9430","Dt 9430, Kt 6710","Dt 6710, Kt 6520","Dt 9430, Kt 6520"],a:3},
+  {q:"Xodimdan daromad solig'i ushlab qolindi. To'g'ri o'tkazma?",opts:["Dt 6410, Kt 6710","Dt 9430, Kt 6410","Dt 6710, Kt 6410","Dt 6520, Kt 6410"],a:2},
+  {q:"Ish haqi bank hisob-kitob schyotidan to'landi. To'g'ri o'tkazma?",opts:["Dt 5110, Kt 6710","Dt 6710, Kt 9430","Dt 6710, Kt 5110","Dt 6520, Kt 5110"],a:2},
+  {q:"Xodim INPS ulushi (1%) ushlab qolindi. To'g'ri o'tkazma?",opts:["Dt 9430, Kt 6520","Dt 6520, Kt 6710","Dt 6410, Kt 6520","Dt 6710, Kt 6520"],a:3},
+  {q:"INPS jamg'armasiga to'lov o'tkazildi. To'g'ri o'tkazma?",opts:["Dt 9430, Kt 5110","Dt 6710, Kt 5110","Dt 6520, Kt 5110","Dt 6410, Kt 5110"],a:2},
+  {q:"Kasallik varag'i nafaqasi xodimga hisoblandi. To'g'ri o'tkazma?",opts:["Dt 9430, Kt 6710","Dt 6710, Kt 6520","Dt 6520, Kt 6710","Dt 6410, Kt 6710"],a:2},
+  {q:"Ish haqi kassadan naqd to'landi. To'g'ri o'tkazma?",opts:["Dt 5010, Kt 6710","Dt 6710, Kt 5110","Dt 6520, Kt 5010","Dt 6710, Kt 5010"],a:3},
+  {q:"Daromad solig'i (JSHIS) byudjetga to'landi. To'g'ri o'tkazma?",opts:["Dt 6520, Kt 5110","Dt 6710, Kt 5110","Dt 9430, Kt 5110","Dt 6410, Kt 5110"],a:3},
+  {q:"Mehnat ta'tili to'lovi xodimga hisoblandi. To'g'ri o'tkazma?",opts:["Dt 6710, Kt 9430","Dt 6520, Kt 6710","Dt 9430, Kt 6520","Dt 9430, Kt 6710"],a:3}
+];
+
+// ============= NAVIGATION =============
+function showSection(id) {
+  document.getElementById('main-menu').style.display='none';
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='flashcards') initFC();
+}
+function showMenu() {
+  document.getElementById('main-menu').style.display='';
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  stopBgMusic(); clearInterval(wgTimerInt);
+}
+
+// ============= FLASHCARDS =============
+let fcIndex=0;
+function initFC(){fcIndex=0;renderFC();}
+function renderFC(){
+  const c=flashcardsData[fcIndex];
+  document.getElementById('fc-term').textContent=c.term;
+  document.getElementById('fc-def').textContent=c.def;
+  document.getElementById('fc-count').textContent=`${fcIndex+1} / ${flashcardsData.length}`;
+  document.getElementById('fc-bar').style.width=`${((fcIndex+1)/flashcardsData.length)*100}%`;
+  document.getElementById('fc-prev').disabled=fcIndex===0;
+  document.getElementById('fc-next').disabled=fcIndex===flashcardsData.length-1;
+  document.getElementById('fc').classList.remove('flipped');
+}
+function flipCard(){document.getElementById('fc').classList.toggle('flipped');}
+function fcNav(d){fcIndex=Math.max(0,Math.min(flashcardsData.length-1,fcIndex+d));renderFC();}
+
+// ============= AUDIO =============
+let audioCtx=null,musicOn=false,bgInterval=null;
+function getACtx(){
+  if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended') audioCtx.resume();
+  return audioCtx;
+}
+function playTone(freq,type,start,dur,vol=0.28){
+  const ctx=getACtx(),o=ctx.createOscillator(),g=ctx.createGain();
+  o.connect(g);g.connect(ctx.destination);
+  o.type=type;o.frequency.value=freq;
+  g.gain.setValueAtTime(0,ctx.currentTime+start);
+  g.gain.linearRampToValueAtTime(vol,ctx.currentTime+start+0.01);
+  g.gain.linearRampToValueAtTime(0,ctx.currentTime+start+dur);
+  o.start(ctx.currentTime+start);o.stop(ctx.currentTime+start+dur+0.05);
+}
+function playCorrectSound(){
+  [523,659,784,1047].forEach((f,i)=>playTone(f,'sine',i*0.1,0.22,0.22));
+  playTone(1047,'sine',0.42,0.45,0.28);
+}
+function playWrongSound(){
+  playTone(200,'square',0,0.1,0.28);
+  playTone(150,'square',0.12,0.16,0.22);
+  playTone(110,'square',0.3,0.14,0.18);
+}
+function playSpinSound(){
+  for(let i=0;i<8;i++) playTone(300+i*80,'triangle',i*0.06,0.08,0.12);
+}
+const bgMelody=[261,293,329,349,392,349,329,293,261,293,329,392,440,392,349,329];
+let bgNoteIdx=0;
+function startBgMusic(){
+  if(!musicOn)return;stopBgMusic();
+  function nxt(){
+    if(!musicOn)return;
+    playTone(bgMelody[bgNoteIdx%bgMelody.length],'triangle',0,0.32,0.10);
+    bgNoteIdx++;bgInterval=setTimeout(nxt,380);
+  }nxt();
+}
+function stopBgMusic(){clearTimeout(bgInterval);bgInterval=null;}
+function toggleMusic(){
+  musicOn=!musicOn;
+  document.getElementById('music-btn').textContent=musicOn?'🎵 Musiqa: Yoq':'🔇 Musiqa: O\'ch';
+  if(musicOn)startBgMusic();else stopBgMusic();
+}
+
+// ============= SALUTE =============
+const salCanvas=document.getElementById('salute-canvas'),sCtx=salCanvas.getContext('2d');
+let particles=[],saluteAF=null;
+function launchSalute(){
+  salCanvas.style.display='block';
+  salCanvas.width=window.innerWidth;salCanvas.height=window.innerHeight;
+  particles=[];
+  const cols=['#FFD700','#FF6B6B','#4ECDC4','#45B7D1','#FFA07A','#98FB98','#DDA0DD','#FF69B4'];
+  for(let b=0;b<6;b++){
+    const x=80+Math.random()*(window.innerWidth-160),y=40+Math.random()*(window.innerHeight/2.2);
+    for(let i=0;i<45;i++){
+      const a=(Math.PI*2/45)*i,sp=3+Math.random()*6;
+      particles.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-2.5,color:cols[~~(Math.random()*cols.length)],life:1,decay:0.013+Math.random()*0.01,size:3+Math.random()*4});
+    }
+  }
+  if(saluteAF)cancelAnimationFrame(saluteAF);animSalute();
+  setTimeout(()=>{salCanvas.style.display='none';particles=[];},3200);
+}
+function animSalute(){
+  sCtx.clearRect(0,0,salCanvas.width,salCanvas.height);
+  particles=particles.filter(p=>p.life>0);
+  particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=0.07;p.life-=p.decay;sCtx.save();sCtx.globalAlpha=p.life;sCtx.fillStyle=p.color;sCtx.beginPath();sCtx.arc(p.x,p.y,p.size,0,Math.PI*2);sCtx.fill();sCtx.restore();});
+  if(particles.length>0)saluteAF=requestAnimationFrame(animSalute);
+}
+
+// ============= WHEEL GAME =============
+const WHEEL_SECTORS=[
+  {label:'⭐ OSON',color:'#1E40AF'},{label:'💎 QIYIN',color:'#7C3AED'},
+  {label:'🔥 TEZKOR',color:'#B91C1C'},{label:'📚 BILIM',color:'#065F46'},
+  {label:'⚡ EKSTRA',color:'#92400E'},{label:'🎯 ANIQ',color:'#1D4ED8'},
+  {label:'🏆 GRAND',color:'#7C2D12'},{label:'✨ BONUS',color:'#4C1D95'}
+];
+const WC=320,CR=WC/2,NUM_S=8,ARC=Math.PI*2/NUM_S;
+
+let wgAngle=0,wgSpinning=false,wgQIdx=0,wgScore=0,wgAnswered=false,wgTimerInt=null,wgTimer=15,wgQOrder=[];
+
+function initWheel(){
+  wgQOrder=shuffleArr([...Array(20).keys()]);
+  wgQIdx=0;wgScore=0;wgAnswered=false;
+  document.getElementById('wg-intro').style.display='none';
+  document.getElementById('wg-play').style.display='block';
+  document.getElementById('wg-result').classList.remove('show');
+  document.getElementById('wg-score').textContent='0';
+  document.getElementById('wg-q-label').textContent='Savol 0 / 20';
+  document.getElementById('wg-prompt').style.display='block';
+  document.getElementById('wg-qcard').classList.remove('show');
+  document.getElementById('wg-spin-btn').disabled=false;
+  document.getElementById('wg-timer-wrap').style.display='none';
+  drawWheel(wgAngle);
+  if(musicOn)startBgMusic();
+}
+
+function drawWheel(rotAngle){
+  const canvas=document.getElementById('wheelCanvas');
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,WC,WC);
+  ctx.save();ctx.translate(CR,CR);ctx.rotate(rotAngle);
+  WHEEL_SECTORS.forEach((s,i)=>{
+    const startA=i*ARC,endA=startA+ARC;
+    // Sector
+    ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,CR-4,startA,endA);ctx.closePath();
+    const grad=ctx.createRadialGradient(0,0,CR*0.2,0,0,CR-4);
+    grad.addColorStop(0,lightenColor(s.color,40));grad.addColorStop(1,s.color);
+    ctx.fillStyle=grad;ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=2;ctx.stroke();
+    // Text
+    ctx.save();ctx.rotate(startA+ARC/2);ctx.translate(CR*0.55,0);ctx.rotate(Math.PI/2);
+    ctx.fillStyle='rgba(255,255,255,0.95)';ctx.font='bold 11px Exo 2,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.shadowColor='rgba(0,0,0,0.6)';ctx.shadowBlur=4;
+    ctx.fillText(s.label,0,0);
+    ctx.restore();
+  });
+  // Outer ring
+  ctx.beginPath();ctx.arc(0,0,CR-2,0,Math.PI*2);
+  ctx.strokeStyle='rgba(212,175,55,0.7)';ctx.lineWidth=4;ctx.stroke();
+  ctx.restore();
+  // Inner shadow
+  ctx.save();ctx.translate(CR,CR);
+  ctx.beginPath();ctx.arc(0,0,28,0,Math.PI*2);
+  ctx.fillStyle='rgba(0,0,0,0.4)';ctx.fill();ctx.restore();
+}
+
+function lightenColor(hex,amt){
+  const n=parseInt(hex.slice(1),16),r=Math.min(255,((n>>16)&0xff)+amt),g=Math.min(255,((n>>8)&0xff)+amt),b=Math.min(255,(n&0xff)+amt);
+  return `rgb(${r},${g},${b})`;
+}
+
+function spinWheel(){
+  if(wgSpinning||wgQIdx>=20)return;
+  playSpinSound();
+  document.getElementById('wg-spin-btn').disabled=true;
+  document.getElementById('wg-prompt').style.display='none';
+  document.getElementById('wg-qcard').classList.remove('show');
+  document.getElementById('wg-fb').className='w-feedback';
+  wgSpinning=true;
+  const extraSpins=5+Math.floor(Math.random()*8);
+  const landSector=Math.floor(Math.random()*NUM_S);
+  const targetAngle=wgAngle+(Math.PI*2*extraSpins)+(landSector*ARC);
+  const duration=3000+Math.random()*1500;
+  const startTime=performance.now(),startAngle=wgAngle;
+  function animate(now){
+    const elapsed=now-startTime,prog=Math.min(elapsed/duration,1);
+    const ease=1-Math.pow(1-prog,4);
+    wgAngle=startAngle+(targetAngle-startAngle)*ease;
+    drawWheel(wgAngle);
+    if(prog<1){requestAnimationFrame(animate);}
+    else{wgAngle=targetAngle%(Math.PI*2);wgSpinning=false;drawWheel(wgAngle);showNextWheelQ();}
+  }
+  requestAnimationFrame(animate);
+}
+
+function showNextWheelQ(){
+  if(wgQIdx>=20){endWheelGame();return;}
+  const qIndex=wgQOrder[wgQIdx];
+  const q=wheelQuestions[qIndex];
+  wgAnswered=false;
+  document.getElementById('wg-q-label').textContent=`Savol ${wgQIdx+1} / 20`;
+  document.getElementById('wg-qlabel').textContent=`📋 Savol ${wgQIdx+1} / 20`;
+  document.getElementById('wg-qtext').textContent=q.q;
+  const fb=document.getElementById('wg-fb');
+  fb.className='w-feedback';fb.textContent='';
+
+  // Shuffle options
+  const idxs=shuffleArr([0,1,2,3]);
+  const newCorrect=idxs.indexOf(q.a);
+  const letters=['A','B','C','D'];
+  const optsEl=document.getElementById('wg-opts');
+  optsEl.innerHTML='';
+  idxs.forEach((origIdx,i)=>{
+    const btn=document.createElement('button');
+    btn.className='w-opt';
+    btn.innerHTML=`<span class="ol">${letters[i]}</span>${q.opts[origIdx]}`;
+    btn.onclick=()=>handleWheelAnswer(i,newCorrect,q);
+    optsEl.appendChild(btn);
+  });
+  document.getElementById('wg-prompt').style.display='none';
+  document.getElementById('wg-qcard').classList.add('show');
+  startWheelTimer();
+}
+
+function startWheelTimer(){
+  wgTimer=15;
+  document.getElementById('wg-timer-wrap').style.display='block';
+  clearInterval(wgTimerInt);
+  updateWheelTimerUI();
+  wgTimerInt=setInterval(()=>{
+    wgTimer--;updateWheelTimerUI();
+    if(wgTimer<=0){clearInterval(wgTimerInt);if(!wgAnswered)wgTimeUp();}
+  },1000);
+}
+
+function updateWheelTimerUI(){
+  document.getElementById('wg-timer-text').textContent=wgTimer;
+  const c=document.getElementById('wg-timer-circle');
+  c.style.strokeDashoffset=188*(1-wgTimer/15);
+  c.style.stroke=wgTimer>8?'#D4AF37':wgTimer>4?'#F59E0B':'#EF4444';
+}
+
+function handleWheelAnswer(selected,correct,q){
+  if(wgAnswered)return;
+  wgAnswered=true;clearInterval(wgTimerInt);
+  document.getElementById('wg-timer-wrap').style.display='none';
+  const btns=document.querySelectorAll('.w-opt');
+  btns.forEach(b=>b.disabled=true);
+  btns[correct].classList.add('correct');
+  const fb=document.getElementById('wg-fb');
+  if(selected===correct){
+    wgScore++;btns[selected].classList.add('correct');
+    fb.textContent='✅ To\'g\'ri javob!';fb.className='w-feedback ok show';
+    playCorrectSound();launchSalute();
+  }else{
+    btns[selected].classList.add('wrong');
+    fb.textContent='❌ Noto\'g\'ri. To\'g\'ri javobga e\'tibor bering!';fb.className='w-feedback fail show';
+    playWrongSound();
+  }
+  document.getElementById('wg-score').textContent=wgScore;
+  wgQIdx++;
+  setTimeout(()=>{
+    document.getElementById('wg-qcard').classList.remove('show');
+    if(wgQIdx<20){
+      document.getElementById('wg-prompt').style.display='block';
+      document.getElementById('wg-prompt').innerHTML=`<strong>Keyingi savol uchun g'ildirakni aylantiring!</strong>Savol ${wgQIdx+1} / 20 — ${20-wgQIdx} savol qoldi`;
+      document.getElementById('wg-spin-btn').disabled=false;
+    }else{endWheelGame();}
+  },2400);
+}
+
+function wgTimeUp(){
+  wgAnswered=true;
+  const btns=document.querySelectorAll('.w-opt');
+  btns.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('wg-fb');
+  fb.textContent='⏰ Vaqt tugadi!';fb.className='w-feedback fail show';
+  playWrongSound();
+  document.getElementById('wg-timer-wrap').style.display='none';
+  wgQIdx++;
+  setTimeout(()=>{
+    document.getElementById('wg-qcard').classList.remove('show');
+    if(wgQIdx<20){
+      document.getElementById('wg-prompt').style.display='block';
+      document.getElementById('wg-prompt').innerHTML=`<strong>Keyingi savol uchun g'ildirakni aylantiring!</strong>Savol ${wgQIdx+1} / 20 — ${20-wgQIdx} savol qoldi`;
+      document.getElementById('wg-spin-btn').disabled=false;
+    }else{endWheelGame();}
+  },2000);
+}
+
+function endWheelGame(){
+  stopBgMusic();
+  document.getElementById('wg-play').style.display='none';
+  const r=document.getElementById('wg-result');r.classList.add('show');
+  document.getElementById('wg-res-score').textContent=wgScore;
+  const pct=Math.round(wgScore/20*100);
+  let stars,msg,icon;
+  if(wgScore>=18){stars='⭐⭐⭐';msg='Mukammal! Siz haqiqiy mutaxassis!';icon='🏆';}
+  else if(wgScore>=15){stars='⭐⭐⭐';msg='Ajoyib natija! Bilimingiz yuksak!';icon='🥇';}
+  else if(wgScore>=12){stars='⭐⭐';msg='Yaxshi! Lekin yana mashq qiling.';icon='👏';}
+  else if(wgScore>=8){stars='⭐';msg='Davom eting! Ko\'proq o\'rganing.';icon='💪';}
+  else{stars='';msg='Infografikani ko\'rib chiqib, qaytadan urinib ko\'ring!';icon='📚';}
+  document.getElementById('wg-res-stars').textContent=stars;
+  document.getElementById('wg-res-msg').textContent=msg;
+  document.getElementById('wg-res-icon').textContent=icon;
+  if(wgScore>=12)launchSalute();
+}
+
+function resetWheel(){
+  document.getElementById('wg-result').classList.remove('show');
+  document.getElementById('wg-play').style.display='none';
+  document.getElementById('wg-intro').style.display='flex';
+  wgAngle=0;drawWheel(0);
+}
+
+// ============= TESTS ENGINE =============
+const testData={1:test1Questions,2:test2Questions,3:test3Questions};
+const testState={1:{idx:0,answers:[],done:false},2:{idx:0,answers:[],done:false},3:{idx:0,answers:[],done:false}};
+
+function startTest(t){
+  testState[t]={idx:0,answers:[],done:false};
+  document.getElementById(`t${t}-intro`).style.display='none';
+  document.getElementById(`t${t}-area`).classList.add('active');
+  document.getElementById(`t${t}-result`).classList.remove('show');
+  document.getElementById(`t${t}-result`).innerHTML='';
+  renderTestQ(t);
+}
+function renderTestQ(t){
+  const st=testState[t],qs=testData[t];
+  if(st.idx>=qs.length){showTestResult(t);return;}
+  const q=qs[st.idx],total=qs.length;
+  document.getElementById(`t${t}-prog`).style.width=`${(st.idx/total)*100}%`;
+  document.getElementById(`t${t}-next`).classList.remove('visible');
+  const idxs=shuffleArr([0,1,2,3]);
+  const newCorrect=idxs.indexOf(q.a);
+  const letters=['A','B','C','D'];
+  document.getElementById(`t${t}-question-wrap`).innerHTML=`
+    <div class="test-question-card fade-in">
+      <div class="test-q-meta">Savol ${st.idx+1} / ${total}</div>
+      <div class="test-q-text">${q.q}</div>
+    </div>
+    <div class="test-options" id="t${t}-opts">
+      ${idxs.map((oi,i)=>`
+        <button class="test-opt" onclick="selectTestOpt(${t},${i},${newCorrect},'${q.opts[oi].replace(/'/g,"\\'")}')" id="t${t}-opt${i}">
+          <span class="opt-ltr">${letters[i]}</span>${q.opts[oi]}
+        </button>`).join('')}
+    </div>`;
+  testState[t]._newCorrect=newCorrect;
+}
+function selectTestOpt(t,selected,correct,selectedText){
+  const opts=document.querySelectorAll(`#t${t}-opts .test-opt`);
+  opts.forEach(o=>o.disabled=true);
+  opts[correct].classList.add('correct');
+  const st=testState[t];const q=testData[t][st.idx];
+  const isCorrect=selected===correct;
+  if(!isCorrect)opts[selected].classList.add('wrong');
+  st.answers.push({question:q.q,selected:selectedText,correct:q.opts[q.a],isCorrect});
+  if(isCorrect)playCorrectSound();else playWrongSound();
+  document.getElementById(`t${t}-next`).classList.add('visible');
+}
+function nextTestQ(t){testState[t].idx++;renderTestQ(t);}
+
+function showTestResult(t){
+  document.getElementById(`t${t}-area`).classList.remove('active');
+  const st=testState[t],total=st.answers.length,correct=st.answers.filter(a=>a.isCorrect).length;
+  const pct=Math.round(correct/total*100);
+  let emoji,comment;
+  if(pct>=90){emoji='🏆';comment='Mukammal natija!';}
+  else if(pct>=70){emoji='👏';comment='Yaxshi! Kam xatolar bor.';}
+  else if(pct>=50){emoji='💪';comment='O\'rtacha. Qayta o\'rganing.';}
+  else{emoji='📚';comment='Infografikani qayta o\'qing!';}
+  if(pct>=70)launchSalute();
+  const reviewHTML=st.answers.map((a,i)=>`
+    <div class="review-item ${a.isCorrect?'ok':'fail'}">
+      <span class="ri-badge ${a.isCorrect?'ok':'fail'}">${a.isCorrect?'✅ To\'g\'ri':'❌ Xato'}</span>
+      <div class="ri-q">${i+1}. ${a.question}</div>
+      ${!a.isCorrect?`<div class="ri-wrong">Sizning javobingiz: ${a.selected}</div>`:''}
+      <div class="ri-correct">To'g'ri javob: ${a.correct}</div>
+    </div>`).join('');
+  const res=document.getElementById(`t${t}-result`);
+  res.innerHTML=`
+    <div class="result-banner">
+      <div class="result-emoji">${emoji}</div>
+      <div class="result-big">${correct}/${total}</div>
+      <div class="result-sub">${pct}% to'g'ri javob</div>
+      <div class="result-comment" style="margin-top:12px">${comment}</div>
+    </div>
+    <h3 style="color:var(--gold);margin-bottom:16px;font-family:'Rajdhani',sans-serif">📋 Javoblar Tahlili</h3>
+    <div class="review-list">${reviewHTML}</div>
+    <button class="retry-btn" onclick="retryTest(${t})">🔄 Testni Qaytadan Ishlash</button>`;
+  res.classList.add('show');
+  document.getElementById(`t${t}-prog`).style.width='100%';
+}
+function retryTest(t){
+  document.getElementById(`t${t}-result`).classList.remove('show');
+  document.getElementById(`t${t}-result`).innerHTML='';
+  document.getElementById(`t${t}-intro`).style.display='flex';
+  document.getElementById(`t${t}-area`).classList.remove('active');
+}
+
+// ============= UTILS =============
+function shuffleArr(a){const arr=[...a];for(let i=arr.length-1;i>0;i--){const j=~~(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+
+// Init
+document.addEventListener('DOMContentLoaded',()=>{initFC();drawWheel(0);});
+window.addEventListener('resize',()=>{
+  const c=document.getElementById('wheelCanvas');
+  if(!c)return;
+  const size=Math.min(320,window.innerWidth-80);
+  c.width=size;c.height=size;
+  drawWheel(wgAngle);
+});
+</script>
+</body>
+</html>
